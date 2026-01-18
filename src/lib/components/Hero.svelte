@@ -1,11 +1,21 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import CVModal from "./CVModal.svelte";
 
     let mounted = $state(false);
+    let isCVModalOpen = $state(false);
 
     onMount(() => {
         mounted = true;
     });
+
+    function openCVModal() {
+        isCVModalOpen = true;
+    }
+
+    function closeCVModal() {
+        isCVModalOpen = false;
+    }
 
     const socialLinks = [
         {
@@ -43,6 +53,27 @@
                 <a href="#experience" class="btn btn-primary">View Experience</a
                 >
                 <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                <button class="btn btn-cv" onclick={openCVModal}>
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        width="18"
+                        height="18"
+                    >
+                        <path
+                            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                        />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                    View CV
+                </button>
             </div>
 
             <div class="hero-social">
@@ -68,6 +99,8 @@
         </div>
     </div>
 </section>
+
+<CVModal isOpen={isCVModalOpen} onClose={closeCVModal} />
 
 <style>
     .hero {
@@ -117,6 +150,23 @@
         display: flex;
         gap: var(--space-sm);
         margin-bottom: var(--space-xl);
+        flex-wrap: wrap;
+    }
+
+    .btn-cv {
+        background: transparent;
+        color: var(--color-accent-dark);
+        border: 1px solid var(--color-accent);
+    }
+
+    .btn-cv:hover {
+        background: var(--color-accent);
+        color: white;
+        border-color: var(--color-accent);
+    }
+
+    .btn-cv svg {
+        flex-shrink: 0;
     }
 
     .hero-social {
